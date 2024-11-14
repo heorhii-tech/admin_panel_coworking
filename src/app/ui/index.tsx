@@ -2,6 +2,7 @@ import { Flex, Layout } from "antd";
 import { Outlet } from "react-router-dom";
 const { Header, Footer, Sider, Content } = Layout;
 import { SideBarMenu } from "@src/widgets/side-bar";
+import { UserProvider } from "@src/features/user/contexts/UserContext";
 
 export const MainLayout = () => {
   const headerStyle: React.CSSProperties = {
@@ -41,17 +42,19 @@ export const MainLayout = () => {
     height: "100vh",
   };
   return (
-    <Layout style={layoutStyle}>
-      <Header style={headerStyle}>Header</Header>
-      <Layout>
-        <Sider width="25%" style={siderStyle}>
-          <SideBarMenu />
-        </Sider>
-        <Content style={contentStyle}>
-          <Outlet />
-        </Content>
+    <UserProvider>
+      <Layout style={layoutStyle}>
+        <Header style={headerStyle}>Header</Header>
+        <Layout>
+          <Sider width="25%" style={siderStyle}>
+            <SideBarMenu />
+          </Sider>
+          <Content style={contentStyle}>
+            <Outlet />
+          </Content>
+        </Layout>
+        <Footer style={footerStyle}>Footer</Footer>
       </Layout>
-      <Footer style={footerStyle}>Footer</Footer>
-    </Layout>
+    </UserProvider>
   );
 };

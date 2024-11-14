@@ -2,13 +2,29 @@ import React from "react";
 import type { FormProps } from "antd";
 import { Button, Form, Input } from "antd";
 import { SignUpFormInputs } from "@src/shared/types/index";
-import useRegister from "@src/pages/sign-in/hooks/register";
+import { SpinLoader } from "@src/shared/ui";
 
-export const SigninForm: React.FC = () => {
+interface SigninFormProps {
+  login: boolean;
+  isLoading: boolean;
+
+  handleAction: (data: SignUpFormInputs) => Promise<void>;
+}
+
+export const SigninForm: React.FC<SigninFormProps> = ({
+  login,
+  isLoading,
+
+  handleAction,
+}) => {
   const [form] = Form.useForm();
   const onFinish: FormProps<SignUpFormInputs>["onFinish"] = (values) => {
-    registerNewUser(values);
-    form.resetFields();
+    if (login) {
+      const { displayName, ...loginValues } = values;
+      handleAction(loginValues); // Pass only the relevant fields (email, password)
+    } else {
+      handleAction(values); // For registration, all fields are passed
+    }
   };
 
   const onFinishFailed: FormProps<SignUpFormInputs>["onFinishFailed"] = (
@@ -16,7 +32,7 @@ export const SigninForm: React.FC = () => {
   ) => {
     console.log("Failed:", errorInfo);
   };
-  const { registerNewUser } = useRegister();
+
   return (
     <Form
       form={form}
@@ -29,25 +45,35 @@ export const SigninForm: React.FC = () => {
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
-      <Form.Item<SignUpFormInputs>
-        label="Username"
-        name="username"
-        rules={[{ required: true, message: "Please input your username!" }]}
-      >
-        <Input />
-      </Form.Item>
+      {isLoading && <SpinLoader fullscreen={true} />}
+
+      {!login && (
+        <Form.Item<SignUpFormInputs>
+          label="Username"
+          name="displayName"
+          rules={[{ required: true, message: "Please input your username!" }]}
+        >
+          <Input />
+        </Form.Item>
+      )}
 
       <Form.Item<SignUpFormInputs>
         label="Password"
         name="password"
-        rules={[{ required: true, message: "Please input your password!" }]}
+        rules={[
+          { required: true, message: "Please input your password!" },
+          { min: 6, message: "Password must be at least 6 characters long." },
+        ]}
       >
         <Input.Password />
       </Form.Item>
       <Form.Item<SignUpFormInputs>
         label="Email"
         name="email"
-        rules={[{ required: true, message: "Please input your email!" }]}
+        rules={[
+          { required: true, message: "Please input your email!" },
+          { type: "email", message: "Please enter a valid email address." },
+        ]}
       >
         <Input />
       </Form.Item>
