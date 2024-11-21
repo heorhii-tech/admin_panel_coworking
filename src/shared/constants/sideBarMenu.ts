@@ -1,11 +1,11 @@
 import { SideBarMenuItem } from "../types";
 export const sideBarMenu: SideBarMenuItem[] = [
   {
-    title: "Tables",
+    title: "TABLES",
     link: "/tables",
   },
   {
-    title: "Reservations",
-    link: "/reservations",
+    title: "CURRWENT RESERVATIONS",
+    link: "/",
   },
 ];

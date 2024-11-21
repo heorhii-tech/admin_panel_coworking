@@ -1,12 +1,15 @@
 import React from "react";
 import { SideBarMenuItem } from "@src/shared/types";
+import { NavLink } from "react-router-dom";
 interface SideBarItemProps {
   item: SideBarMenuItem;
 }
 export const SideBarItem: React.FC<SideBarItemProps> = ({ item }) => {
   return (
-    <ul>
-      <li>{item.link}</li>
-    </ul>
+   
+      <li>
+        <NavLink to={item.link}>{item.title}</NavLink>
+      </li>
+   
   );
 };

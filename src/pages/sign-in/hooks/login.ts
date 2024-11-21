@@ -43,13 +43,14 @@ export const useLogin = (): {
 
           if (userDoc.exists()) {
             const userData = userDoc.data();
+
             // Проверяем роль пользователя
             if (userData?.role === "admin") {
               const loggedUser = {
                 token,
                 email: user.email,
-                displayName: userData?.displayName || null,
-                role: userData?.role || "user", // Используем роль из Firestore
+                displayName: userData?.displayName || "",
+                role: userData?.role || "",
               };
               setUser(loggedUser);
               localStorage.setItem("user", JSON.stringify(loggedUser));
@@ -62,8 +63,11 @@ export const useLogin = (): {
         }
       });
     } catch (error: any) {
-      console.error(error);
-      setError(error.message || "An error occurred");
+      if (error.message === "Firebase: Error (auth/invalid-credential).") {
+        setError("Invalid e-mail or password");
+      } else {
+        setError("An error occurred");
+      }
     } finally {
       setIsloading(false);
     }

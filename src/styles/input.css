@@ -1,4 +1,11 @@
-@import "../shared/ui/main-layout/main-layout.css";
+@import "../app/ui/main-layout.css";
+@import "../pages/sign-in/ui/styles/login-page.css";
+@import "../widgets/signin-form/ui/styles/signin-form.css";
+@import "../widgets/side-bar/styles/side-bar-menu.css";
+@import "../widgets/header/styles/header.css";
+@import "../widgets/tables/styles/tables.css";
+@import "../widgets/search-form/styles/search-form.css";
+@import "../widgets/reservations/styles/reservations.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

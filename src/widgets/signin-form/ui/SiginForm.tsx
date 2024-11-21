@@ -22,8 +22,10 @@ export const SigninForm: React.FC<SigninFormProps> = ({
     if (login) {
       const { displayName, ...loginValues } = values;
       handleAction(loginValues); // Pass only the relevant fields (email, password)
+      form.resetFields();
     } else {
       handleAction(values); // For registration, all fields are passed
+      form.resetFields();
     }
   };
 
@@ -35,15 +37,13 @@ export const SigninForm: React.FC<SigninFormProps> = ({
 
   return (
     <Form
+      className="signin-form"
       form={form}
       name="basic"
-      labelCol={{ span: 8 }}
-      wrapperCol={{ span: 16 }}
-      style={{ maxWidth: 600 }}
       initialValues={{ remember: true }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
-      autoComplete="off"
+      layout="vertical"
     >
       {isLoading && <SpinLoader fullscreen={true} />}
 
@@ -56,6 +56,16 @@ export const SigninForm: React.FC<SigninFormProps> = ({
           <Input />
         </Form.Item>
       )}
+      <Form.Item<SignUpFormInputs>
+        label="Email"
+        name="email"
+        rules={[
+          { required: true, message: "Please input your email!" },
+          { type: "email", message: "Please enter a valid email address." },
+        ]}
+      >
+        <Input />
+      </Form.Item>
 
       <Form.Item<SignUpFormInputs>
         label="Password"
@@ -66,16 +76,6 @@ export const SigninForm: React.FC<SigninFormProps> = ({
         ]}
       >
         <Input.Password />
-      </Form.Item>
-      <Form.Item<SignUpFormInputs>
-        label="Email"
-        name="email"
-        rules={[
-          { required: true, message: "Please input your email!" },
-          { type: "email", message: "Please enter a valid email address." },
-        ]}
-      >
-        <Input />
       </Form.Item>
 
       <Form.Item label={null}>

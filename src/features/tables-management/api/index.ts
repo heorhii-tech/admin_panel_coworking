@@ -1,0 +1,1 @@
+export { tablesServices } from "./services";

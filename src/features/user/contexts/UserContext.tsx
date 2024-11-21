@@ -6,6 +6,7 @@ interface User {
   name?: string;
   email: string | null;
   token: string;
+  displayName: string;
 }
 
 interface UserContextProps {

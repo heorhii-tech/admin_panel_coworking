@@ -1,19 +1,50 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createHashRouter } from "react-router-dom";
 import { MainLayout } from "../ui";
-import { LoginPage, RegisterPage } from "@src/pages/sign-in";
 
-export const router = createBrowserRouter([
+import { RedirectIfAuthenticated, RequireAuth } from "@src/shared/utils/index";
+import {
+  CurrentReservationsPage,
+  RegisterPage,
+  LoginPage,
+  TablesPage,
+} from "@src/pages/index";
+
+export const router = createHashRouter([
   {
     path: "/",
     element: <MainLayout />,
     children: [
       {
         path: "signup",
-        element: <RegisterPage />,
+        element: (
+          <RedirectIfAuthenticated>
+            <RegisterPage />
+          </RedirectIfAuthenticated>
+        ),
       },
       {
         path: "login",
-        element: <LoginPage />,
+        element: (
+          <RedirectIfAuthenticated>
+            <LoginPage />
+          </RedirectIfAuthenticated>
+        ),
+      },
+      {
+        path: "",
+        element: (
+          <RequireAuth>
+            <CurrentReservationsPage />
+          </RequireAuth>
+        ),
+      },
+      {
+        path: "/tables",
+        element: (
+          <RequireAuth>
+            <TablesPage />
+          </RequireAuth>
+        ),
       },
     ],
   },

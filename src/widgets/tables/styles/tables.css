@@ -1,0 +1,18 @@
+.tables-list {
+  @apply flex flex-col;
+  @apply xl:mt-8;
+}
+.table-info {
+  @apply flex flex-col justify-center h-[75%] gap-2;
+  p {
+    @apply text-xl text-gray-600;
+  }
+  span {
+    @apply text-black;
+  }
+}
+.table {
+  .buttons {
+    @apply justify-end;
+  }
+}

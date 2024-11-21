@@ -1,0 +1,6 @@
+.sidebar-menu {
+  @apply xl:mt-6;
+  ul {
+    @apply flex flex-col xl:gap-6;
+  }
+}
