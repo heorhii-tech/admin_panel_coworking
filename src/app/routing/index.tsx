@@ -7,6 +7,7 @@ import {
   RegisterPage,
   LoginPage,
   TablesPage,
+  EditTablePage,
 } from "@src/pages/index";
 
 export const router = createHashRouter([
@@ -43,6 +44,14 @@ export const router = createHashRouter([
         element: (
           <RequireAuth>
             <TablesPage />
+          </RequireAuth>
+        ),
+      },
+      {
+        path: "/tables/:tableID",
+        element: (
+          <RequireAuth>
+            <EditTablePage />
           </RequireAuth>
         ),
       },

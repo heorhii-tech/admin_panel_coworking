@@ -5,7 +5,7 @@ export const sideBarMenu: SideBarMenuItem[] = [
     link: "/tables",
   },
   {
-    title: "CURRWENT RESERVATIONS",
+    title: "CURRENT RESERVATIONS",
     link: "/",
   },
 ];

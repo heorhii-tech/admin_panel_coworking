@@ -7,28 +7,30 @@ type AddTableFormProps = {
   tablesActions: {
     handleAddNewTable: (tableData: Table) => Promise<void>;
   };
+  onFormSubmit: () => void;
 };
 
 export const AddTableForm: React.FC<AddTableFormProps> = ({
   tablesActions,
+  onFormSubmit,
 }) => {
   const { handleAddNewTable } = tablesActions;
   const [form] = Form.useForm();
-  const onFinish: FormProps<Table>["onFinish"] = (values) => {
-    handleAddNewTable(values);
+  const onFinish: FormProps<Table>["onFinish"] = async (values) => {
+    await handleAddNewTable(values);
     form.resetFields();
+    onFormSubmit();
   };
 
   const onFinishFailed: FormProps<Table>["onFinishFailed"] = (errorInfo) => {
     console.log("Failed:", errorInfo);
-    form.resetFields();
   };
 
   return (
     <Form
       name="addTable"
-      labelCol={{ span: 8 }}
-      wrapperCol={{ span: 16 }}
+      labelCol={{ span: 6 }}
+      wrapperCol={{ span: 32 }}
       style={{ maxWidth: 600 }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
@@ -36,7 +38,7 @@ export const AddTableForm: React.FC<AddTableFormProps> = ({
       form={form}
     >
       <Form.Item<Table>
-        label="Table ID"
+        label="Table name"
         name="tableID" // Используем name для значения
         rules={[{ required: true, message: "Please input the table ID!" }]}
       >

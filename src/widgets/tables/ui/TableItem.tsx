@@ -2,9 +2,13 @@ import React from "react";
 import { Table } from "@src/shared/types";
 import { LikeOutlined, MessageOutlined, StarOutlined } from "@ant-design/icons";
 import { Avatar, List, Space, Typography, Flex, Button } from "antd";
+import { NavLink } from "react-router-dom";
 
 interface TableItemProps {
   table: Table;
+  tablesActions: {
+    handleDeleteTable: (tableID: string) => Promise<void>;
+  };
 }
 const { Text } = Typography;
 const IconText = ({ icon, text }: { icon: React.FC; text: string }) => (
@@ -13,7 +17,11 @@ const IconText = ({ icon, text }: { icon: React.FC; text: string }) => (
     {text}
   </Space>
 );
-export const TableItem: React.FC<TableItemProps> = ({ table }) => {
+export const TableItem: React.FC<TableItemProps> = ({
+  table,
+  tablesActions,
+}) => {
+  const { handleDeleteTable } = tablesActions;
   return (
     <List.Item
       className="table"
@@ -32,8 +40,14 @@ export const TableItem: React.FC<TableItemProps> = ({ table }) => {
         </p>
       </div>
       <Flex className="buttons" wrap gap="small">
-        <Button>CHANGE NAME</Button>
-        <Button type="primary" danger>
+        <Button>
+          <NavLink to={`/tables/${table.tableID}`}>EDIT</NavLink>
+        </Button>
+        <Button
+          type="primary"
+          danger
+          onClick={() => handleDeleteTable(table.tableID)}
+        >
           DELETE
         </Button>
       </Flex>

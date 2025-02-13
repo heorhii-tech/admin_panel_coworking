@@ -5,16 +5,28 @@ import TableItem from "./TableItem";
 
 interface TablesListProps {
   tables: Table[];
+  tablesActions: {
+    handleDeleteTable: (tableID: string) => Promise<void>;
+  };
 }
 
-export const TablesList: React.FC<TablesListProps> = ({ tables }) => {
+export const TablesList: React.FC<TablesListProps> = ({
+  tables,
+  tablesActions,
+}) => {
   return tables.length ? (
     <List
       className="tables-list"
       itemLayout="vertical"
       size="small"
       dataSource={tables}
-      renderItem={(table) => <TableItem key={table.tableID} table={table} />}
+      renderItem={(table) => (
+        <TableItem
+          tablesActions={tablesActions}
+          key={table.tableID}
+          table={table}
+        />
+      )}
     />
   ) : (
     <>No tables</>
